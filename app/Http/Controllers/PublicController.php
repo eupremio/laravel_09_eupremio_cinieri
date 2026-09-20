@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\File;
 
 class PublicController extends Controller
 {
@@ -29,7 +30,13 @@ class PublicController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
+            'image' => [
+                'required',
+                File::image()->max('2mb'),
+            ],
         ]);
+
+        $validated['image'] = $request->file('image')->store('posts', 'public');
 
         Post::create($validated);
 

@@ -18,6 +18,15 @@
 
     @forelse ($posts as $post)
         <article class="card mb-3">
+
+            @if ($post->image)
+                <img
+                    src="{{ asset('storage/' . $post->image) }}"
+                    class="card-img-top"
+                    alt="{{ $post->title }}"
+                >
+            @endif
+
             <div class="card-body">
                 <h2 class="card-title">
                     {{ $post->title }}
@@ -27,6 +36,7 @@
                     {{ $post->content }}
                 </p>
             </div>
+
         </article>
     @empty
         <div class="alert alert-secondary">
